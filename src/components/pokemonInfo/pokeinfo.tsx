@@ -79,7 +79,7 @@ export default async function Pokeinfo({ url }: { url: string }) {
         typejson = await typefecth.json();
 
         typelangage = typejson.names.find(
-          (name) => name.language.name === 'zh-Hant'
+          (name) => name.language.name === 'ja'
         );
         typejaname = [
           ...typejaname,
