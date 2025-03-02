@@ -1,4 +1,5 @@
-import Pokeinfo from '@/components/pokemonInfo/pokeinfo';
+import Pokeinfo from '@/components/Info/pokeinfo';
+import { fetchJson } from '@/lib/fetchJson';
 
 interface PokeObj {
   results: { name: string; url: string }[];
@@ -6,13 +7,9 @@ interface PokeObj {
 
 export default async function GetPokeInfo({ offset }: { offset: string }) {
   try {
-    const poke = await fetch(
+    const pokejson: PokeObj = await fetchJson<PokeObj>(
       `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`
     );
-    if (!poke.ok) {
-      throw new Error(`Failed to fetch  ] : ${poke.status}`);
-    }
-    const pokejson: PokeObj = await poke.json();
 
     if (pokejson.results.length === 0) {
       throw new Error('pokejson.results');

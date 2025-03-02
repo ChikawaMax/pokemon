@@ -1,12 +1,11 @@
+import { fetchJson } from '@/lib/fetchJson';
 import Link from 'next/link';
 import { JSX } from 'react';
 
 export default async function Header() {
-  const poke = await fetch(`https://pokeapi.co/api/v2/pokemon`);
-  if (!poke.ok) {
-    throw new Error(`Failed to fetch  ] : ${poke.status}`);
-  }
-  const pokejson: { count: number } = await poke.json();
+  const pokejson: { count: number } = await fetchJson<{ count: number }>(
+    'https://pokeapi.co/api/v2/pokemon'
+  );
 
   let LinkArray: JSX.Element[] = [];
   for (let i = 0; i < pokejson.count; i += 20) {
