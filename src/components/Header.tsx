@@ -1,0 +1,34 @@
+import Link from 'next/link';
+import { JSX } from 'react';
+
+export default async function Header() {
+  const poke = await fetch(`https://pokeapi.co/api/v2/pokemon`);
+  if (!poke.ok) {
+    throw new Error(`Failed to fetch  ] : ${poke.status}`);
+  }
+  const pokejson: { count: number } = await poke.json();
+
+  let LinkArray: JSX.Element[] = [];
+  for (let i = 0; i < pokejson.count; i += 20) {
+    LinkArray = [
+      ...LinkArray,
+      <Link
+        className="border py-1 px-2 bg-red-500 hover:bg-red-700 text-white rounded-md inline-flex items-center justify-center"
+        key={i}
+        href={`/info/${i}`}
+      >{`No.${i + 1} ~ No.${i + 20}`}</Link>,
+    ];
+  }
+
+  return (
+    <>
+      <Link
+        href={'/'}
+        className="border-b border-black flex items-center justify-center text-3xl py-3 mb-2"
+      >
+        ポケモン図鑑
+      </Link>
+      <div className="grid grid-cols-7 gap-1">{LinkArray}</div>
+    </>
+  );
+}
