@@ -6,14 +6,13 @@ export function Name({
   pokejapanjson,
 }: {
   pokejson: CustomPokeAPI;
-  pokejapanjson: PokeAPI.PokemonSpecies;
+  pokejapanjson: PokeAPI.PokemonSpecies | null;
 }) {
-  let jaName: string = pokejson.name; //ポケモンの名前(英語)
-
   //日本語の名前を取得
-  jaName =
-    pokejapanjson.names.find((name) => name.language.name === 'ja')?.name ||
+  const jaName =
+    pokejapanjson?.names.find((name) => name.language.name === 'ja')?.name ||
     pokejson.name;
+
   return (
     <h2 className="text-xl pr-4">
       No.{pokejson.id} {jaName}

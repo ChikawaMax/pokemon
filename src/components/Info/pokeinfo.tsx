@@ -14,10 +14,14 @@ export default async function Pokeinfo({ url }: { url: string }) {
     const pokejson = await fetchJson<CustomPokeAPI>(url);
 
     //日本語情報の取得
-    const pokejapanjson: PokeAPI.PokemonSpecies =
-      await fetchJson<PokeAPI.PokemonSpecies>(
+    let pokejapanjson: PokeAPI.PokemonSpecies | null = null;
+    try {
+      pokejapanjson = await fetchJson<PokeAPI.PokemonSpecies>(
         `https://pokeapi.co/api/v2/pokemon-species/${pokejson.id}`
       );
+    } catch {
+      console.warn(`日本語情報の取得に失敗しました: ${pokejson.name}`);
+    }
 
     return (
       <div className="border border-black rounded-md m-3 p-3">
@@ -26,7 +30,7 @@ export default async function Pokeinfo({ url }: { url: string }) {
           <Type pokejson={pokejson} />
         </div>
         <Img pokejson={pokejson} />
-        <Flavor pokejson={pokejson} pokejapanjson={pokejapanjson} />
+        <Flavor pokejapanjson={pokejapanjson} />
         <Audio pokejson={pokejson} />
         <List pokejson={pokejson} />
       </div>

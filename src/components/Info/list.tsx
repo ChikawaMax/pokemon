@@ -1,15 +1,25 @@
 import { CustomPokeAPI } from '@/types/pokemon';
 
-const statusName = ['HP', '攻撃', '防御', '特攻', '特防', '素早さ'];
-
+const statusLabels: Record<string, string> = {
+  hp: 'HP',
+  attack: '攻撃',
+  defense: '防御',
+  'special-attack': '特攻',
+  'special-defense': '特防',
+  speed: '素早さ',
+};
 export function List({ pokejson }: { pokejson: CustomPokeAPI }) {
   return (
-    <ul className="list-disc list-inside mt-3">
-      {pokejson.stats.map((stat, index) => (
-        <li key={index}>
-          {statusName[index]} : {stat.base_stat}
-        </li>
-      ))}
-    </ul>
+    <table className="mt-3">
+      <tbody>
+        {pokejson.stats.map((stat) => (
+          <tr key={stat.stat.name}>
+            <td>{statusLabels[stat.stat.name] ?? stat.stat.name}</td>
+            <td>:</td>
+            <td>{stat.base_stat}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }

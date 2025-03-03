@@ -11,10 +11,13 @@ export async function Type({ pokejson }: { pokejson: CustomPokeAPI }) {
   const typejaname = await Promise.all(
     //https://pokeapi.co/api/v2/pokemon/1/で取得したタイプと一致しているタイプ情報取得
     pokejson.types.map(async ({ type }) => {
+      //ポケモンのタイプと一致しているタイプ情報を変数に格納
       const typeData = poketypejson.results.find((r) => r.name === type.name);
       if (!typeData) return 'タイプ取得不可';
+
       //一致していたタイプ情報の日本語を取得して、タグに入れる
       const typejson = await fetchJson<TypeJa>(typeData.url);
+
       return (
         <p key={type.name}>
           {typejson.names.find((name) => name.language.name === 'ja')?.name ||
