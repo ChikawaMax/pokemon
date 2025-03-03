@@ -10,7 +10,7 @@ import { Type } from './type';
 
 export default async function Pokeinfo({ url }: { url: string }) {
   try {
-    //https://pokeapi.co/api/v2/pokemon/1/の取得
+    //ポケモンAPIの取得
     const pokejson = await fetchJson<CustomPokeAPI>(url);
 
     //日本語情報の取得
