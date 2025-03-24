@@ -12,7 +12,7 @@ export default async function Buttons() {
     LinkArray = [
       ...LinkArray,
       <Link
-        className="border py-1 px-2 bg-red-500 hover:bg-red-700 text-white rounded-md inline-flex items-center justify-center"
+        className="border py-1 px-2 bg-stone-500 hover:bg-stone-700 text-white rounded-md inline-flex items-center justify-center"
         key={i}
         href={`/info/${i}`}
       >{`No.${i + 1} ~ No.${i + 20}`}</Link>,
